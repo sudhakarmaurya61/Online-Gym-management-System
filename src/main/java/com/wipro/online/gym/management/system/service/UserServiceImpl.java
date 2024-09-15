@@ -1,5 +1,6 @@
 package com.wipro.online.gym.management.system.service;
 
+import java.net.http.HttpClient;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -87,9 +88,10 @@ public class UserServiceImpl implements IUserInterface{
 	@Override
 	public ResponseDto loginUser(UserDTO userDto) {
 		ResponseDto responseDto=new ResponseDto();
-		User user=userRepository.findByEmailAndPassword(userDto.getEmail(),userDto.getPassword());
+		Optional<User> user=userRepository.findByEmailAndPassword(userDto.getEmail(),userDto.getPassword());
 		System.out.println(user);
-		if(user.getEmail().equalsIgnoreCase(userDto.getEmail()))
+		
+		if(user.isPresent())
 		{
 			responseDto.setError(false);
 			responseDto.setStatusCode(200);
@@ -98,8 +100,8 @@ public class UserServiceImpl implements IUserInterface{
 		}
 		else
 		{
-			responseDto.setError(false);
-			responseDto.setStatusCode(200);
+			responseDto.setError(true);
+			responseDto.setStatusCode(401);
 			responseDto.setMessage("User not Registered.");
 		}
 		return responseDto;
@@ -124,7 +126,7 @@ public class UserServiceImpl implements IUserInterface{
 		else
 		{
 			responseDto.setError(false);
-			responseDto.setStatusCode(200);
+			responseDto.setStatusCode(401);
 			responseDto.setMessage("User not Registered.");
 		}
 		return responseDto;
@@ -290,6 +292,16 @@ else
 		responseDto.setError(false);
 		responseDto.setStatusCode(200);
 		responseDto.setMessage("Contact info saved successfully.");
+		return responseDto;
+	}
+	@Override
+	public ResponseDto getAllTrainer() {
+		ResponseDto responseDto=new ResponseDto();
+		List<Trainner> trainer=trainnerRepository.findAll();
+		responseDto.setError(false);
+		responseDto.setStatusCode(200);
+		responseDto.setMessage("Trainer info get successfully.");
+		responseDto.setObjectData(trainer);
 		return responseDto;
 	}
 

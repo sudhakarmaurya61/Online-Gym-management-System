@@ -17,6 +17,7 @@ public class OnlineGymManagementSystemApplication  {
 	public static void main(String[] args) {
 		SpringApplication.run(OnlineGymManagementSystemApplication.class, args);
 	}
+	
 	  @Bean
 	    public WebMvcConfigurer corsConfigurer() {
 

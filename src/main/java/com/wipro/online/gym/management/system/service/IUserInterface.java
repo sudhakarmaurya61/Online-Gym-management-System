@@ -34,4 +34,6 @@ public interface IUserInterface {
 
 	ResponseDto saveContactUs(ContactUs contactUs);
 
+	ResponseDto getAllTrainer();
+
 }
